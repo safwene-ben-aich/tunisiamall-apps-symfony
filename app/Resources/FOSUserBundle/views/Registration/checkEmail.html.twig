@@ -1,0 +1,13 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+        {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="alert alert-{{ type }}">
+ {{ 'registration.check_email'|trans({'%email%': user.email}) }}
+      </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock fos_user_content %}

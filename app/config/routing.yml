@@ -1,0 +1,12 @@
+labess_backoffice:
+    resource: "@LabessBackofficeBundle/Resources/config/routing.yml"
+    prefix:   /
+
+tunisiamalltunisiamall:
+    resource: "@TunisiamalltunisiamallBundle/Resources/config/routing.yml"
+    prefix:   /
+utilisateursutilisateurs:
+    resource: "@utilisateursutilisateursBundle/Resources/config/routing.yml"
+    prefix:   /
+
+

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8" />
+
+        
+        
+        
+        
+
+        <meta name="description" content="{% block description %}{% endblock %}">
+        <meta name="keywords" content="{% block motsCles %}{% endblock %}" />
+        <!-- styles -->
+    <title>{% block title %}TunisiaMall by-Lebes{% endblock %}</title>
+        {% block stylesheets %}
+       
+            
+            
+            
+            
+            <link href="{{ asset("css/font-awesome.css") }}" rel="stylesheet">
+            <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+            <link href="{{ asset("css/animate.min.css")}}" rel="stylesheet">
+            <link href="{{ asset("css/owl.carousel.css") }}" rel="stylesheet">
+            <link href="{{ asset("css/owl.theme.css") }}" rel="stylesheet">
+            <!-- theme stylesheet -->
+            <link href="{{ asset("css/style.default.css") }}" rel="stylesheet" id="theme-stylesheet">
+
+            <!-- your stylesheet with modifications -->
+            <link href="{{ asset("css/custom.css") }}" rel="stylesheet"> 
+            <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100' rel='stylesheet' type='text/css'>
+        {% endblock %}
+      <link rel="icon"  href="{{ asset("img/icontm.png")}}" />
+    </head>
+
+    <body>
+        <!-- *** TOPBAR ***
+        _________________________________________________________ -->
+       
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+            <div id="top">
+                <div class="container">
+                    <div class="col-md-6 offer" data-animate="fadeInDown">
+                         <a href="{{path('produitsroom')}}" class="btn btn-success btn-sm" data-animate-hover="shake">Watch products in the most glorious way click</a>
+                    </div>
+                    <div class="col-md-6" data-animate="fadeInDown">
+                        <ul class="menu">
+
+                            <li><a href="{{path('contact')}}">Contact</a>
+                            </li>
+                            <li><a href="#">Recently viewed</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <div id="top">
+                <div class="container">
+                    <div class="col-md-6 offer" data-animate="fadeInDown">
+                        <a href="{{path('produitsroom')}}" class="btn btn-success btn-sm" data-animate-hover="shake">Watch products in the most glorious way click</a>
+                    </div>
+                    <div class="col-md-6" data-animate="fadeInDown">
+                        <ul class="menu">
+                            <li><a href="{{path('fos_user_security_login')}}" data-toggle="modal" data-target="#login-modal">Login</a>
+
+                            </li>
+                            <li><a href="{{path('fos_user_registration_register')}}">Register</a>
+                            </li>
+                            <li><a href="{{path('contact')}}">Contact</a>
+                            </li>
+                            <li><a href="#">Recently viewed</a>
+                            </li>
+                            
+                            
+                            <li> <a href="{{path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}">
+                                    <span>Facebook</span>
+</a></li>
+                            <li><a href="{{path('hwi_oauth_service_redirect', {'service': 'google' }) }}">
+    <span>Google</span>
+</a></li>
+
+
+
+
+   {% block content %}
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function() {
+            // init the FB JS SDK
+            FB.init({
+                appId      : '1441496086146923',                        // App ID from the app dashboard
+                channelUrl : '//yourdomain.com/channel.html',      // Channel file for x-domain comms
+                status     : true,                                 // Check Facebook Login status
+                xfbml      : true                                  // Look for social plugins on the page
+            });
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function fb_login() {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+                    // connected
+                    alert('Already connected, redirect to login page to create token.');
+                    document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                } else {
+                    // not_authorized
+                    FB.login(function(response) {
+                        if (response.authResponse) {
+                            document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                        } else {
+                            alert('Cancelled.');
+                        }
+                    }, {scope: 'email'});
+                }
+            });
+        }
+    </script>
+
+   
+    <p>
+        <a href="#" onclick="fb_login();">Facebook Connect Button (Dialog)</a>
+    </p>
+
+    {# Bonus: Show all available login link in HWIOAuthBundle #}
+    {% render(controller('HWIOAuthBundle:Connect:connect')) %}
+{% endblock %}
+        
+                          
+              
+
+
+
+
+                            
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="Login">Customer login</h4>
+                            </div>
+                            <div class="modal-body">
+                                {% block fos_user %} {% endblock fos_user %}
+                                <p class="text-center text-muted">Wait a minute please the form will show up. And is you're not registered...</p>
+                                <p class="text-center text-muted"><a href="{{ path('fos_user_registration_register')}}"><strong>Register now</strong></a>! It is easy and done in 1&nbsp;minute and gives you access to special discounts and much more!</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+                                
+                               
+                               
+                                
+        {% endif %}
+
+     
+        
+        
+        
+     
+        <!-- *** TOP BAR END *** -->
+
+        <!-- *** NAVBAR ***
+        _________________________________________________________ -->
+
+        <div class="navbar navbar-default yamm" role="navigation" id="navbar">
+            <div class="container">
+                <div class="navbar-header">
+
+                    <a class="navbar-brand home" href="{{path ('home')}}" data-animate-hover="bounce">
+                        <img src="{{ asset("img/logo-small-tm.png")}}" alt="Tunusia Mall logo" class="hidden-xs">
+                        <img src="{{ asset("img/logo-small-tm.png")}}" alt="Tunusia Mall logo" class="visible-xs"><span class="sr-only">Obaju - go to homepage</span>
+                    </a>
+                    <div class="navbar-buttons">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
+                            <span class="sr-only">Toggle navigation</span>
+                            <i class="fa fa-align-justify"></i>
+                        </button>
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#search">
+                            <span class="sr-only">Toggle search</span>
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a class="btn btn-default navbar-toggle" href="{{path ('panier')}}">
+                            <i class="fa fa-shopping-cart"></i>  <span class="hidden-xs">  {% render(controller('TunisiamalltunisiamallBundle:panier:menu')) %} items in cart</span>
+                        </a>
+                    </div>
+                </div>
+                <!--/.navbar-header -->
+
+                <div class="navbar-collapse collapse" id="navigation">
+
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="active"><a href="{{ path('home')}}">Home</a>
+                        </li>
+                        <li class="dropdown yamm-fw">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Men <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h5>Clothing</h5>
+                                                <ul>
+                                                     {% render (controller('TunisiamalltunisiamallBundle:produit:menuHc')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Shoes</h5>
+                                                <ul>
+                                                   {% render (controller('TunisiamalltunisiamallBundle:produit:menuHS')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Accessories</h5>
+                                                <ul>
+                                                    {% render (controller('TunisiamalltunisiamallBundle:produit:menuHA')) %}
+                                                </ul>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- /.yamm-content -->
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown yamm-fw">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Ladies <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h5>Clothing</h5>
+                                                <ul>
+                                                  {% render (controller('TunisiamalltunisiamallBundle:produit:menuFc')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Shoes</h5>
+                                                <ul>
+                                                    {% render (controller('TunisiamalltunisiamallBundle:produit:menuFS')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Accessories</h5>
+                                                <ul>
+                                                    {% render (controller('TunisiamalltunisiamallBundle:produit:menuFA')) %}
+                                                </ul>
+                                               
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="banner">
+                                                    <a href="#">
+                                                        <img src="{{asset("img/banner.jpg") }}" class="img img-responsive" alt="">
+                                                    </a>
+                                                </div>
+                                                <div class="banner">
+                                                    <a href="#">
+                                                        <img src="{{ asset("img/banner2.jpg") }}" class="img img-responsive" alt="">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.yamm-content -->
+                                </li>
+                            </ul>
+                        </li>
+
+                         <li class="dropdown yamm-fw">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="200">Kids <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <div class="yamm-content">
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <h5>Clothing</h5>
+                                                <ul>
+                                                  {% render (controller('TunisiamalltunisiamallBundle:produit:menuEc')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Shoes</h5>
+                                                <ul>
+                                                    {% render (controller('TunisiamalltunisiamallBundle:produit:menuES')) %}
+                                                </ul>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <h5>Accessories</h5>
+                                                <ul>
+                                                    {% render (controller('TunisiamalltunisiamallBundle:produit:menuEA')) %}
+                                                </ul>
+                                               
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- /.yamm-content -->
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <!--/.nav-collapse -->
+
+                <div class="navbar-buttons">
+
+                    <div class="navbar-collapse collapse right" id="basket-overview">
+                        <a href="{{ path('panier')}}" class="btn btn-primary navbar-btn"><i class="fa fa-shopping-cart"></i><span class="hidden-sm">{% render(controller('TunisiamalltunisiamallBundle:panier:menu')) %} items in cart</span></a>
+                    </div>
+                    <!--/.nav-collapse -->
+
+                    <div class="navbar-collapse collapse right" id="search-not-mobile">
+                        <button type="button" class="btn navbar-btn btn-primary" data-toggle="collapse" data-target="#search">
+                            <span class="sr-only">Toggle search</span>
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+                <div class="collapse clearfix" id="search">
+                    {% render(controller('TunisiamalltunisiamallBundle:produit:recherche')) %}
+                </div>
+
+
+                <!--/.nav-collapse -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#navbar -->
+
+        <!-- *** NAVBAR END *** -->
+
+
+
+        <div id="all">
+        {% block body %}{% endblock %}
+
+
+
+
+
+
+        <!-- *** FOOTER ***
+        _________________________________________________________ -->
+        <div id="footer" data-animate="fadeInUp">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <h4>Pages</h4>
+
+                        <ul>
+                            <li><a href="text.html">About us</a>
+                            </li>
+                            <li><a href="text.html">Terms and conditions</a>
+                            </li>
+                            <li><a href="faq.html">FAQ</a>
+                            </li>
+                            <li><a href="{{ path('contact')}}">Contact us</a>
+                            </li>
+                        </ul>
+
+                        <hr>
+                        <h4>User section</h4>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <ul>
+                                <li>
+                                    <a href="{{ path('listecommandes')}}"><i class="fa fa-list"></i> My orders</a>
+                                </li>
+                                <li class="active">
+                                    <a href="{{ path('wishlist')}}"><i class="fa fa-heart"></i> My wishlist</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('fos_user_profile_edit')}}"><i class="fa fa-user"></i> My account</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('fos_user_change_password')}}"><i class="fa fa-user"></i> Change password</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('fos_user_security_logout')}}"><i class="fa fa-sign-out"></i> Logout</a>
+                                </li>
+                            </ul> 
+                        {% else %}
+                            <ul>
+                                <li><a href="{{ path('fos_user_security_login')}}" data-toggle="modal" data-target="#login-modal">Login</a>
+                                </li>
+                                <li><a href="{{ path('fos_user_registration_register')}}">Regiter</a>
+                                </li>
+                            </ul>
+                        {% endif %}
+                        <hr class="hidden-md hidden-lg hidden-sm">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Top categories</h4>
+
+                        <h5>Men</h5>
+
+                        <ul>
+                            <li><a href="category.html">T-shirts</a>
+                            </li>
+                            <li><a href="category.html">Shirts</a>
+                            </li>
+                            <li><a href="category.html">Accessories</a>
+                            </li>
+                        </ul>
+
+                        <h5>Ladies</h5>
+                        <ul>
+                            <li><a href="category.html">T-shirts</a>
+                            </li>
+                            <li><a href="category.html">Skirts</a>
+                            </li>
+                            <li><a href="category.html">Pants</a>
+                            </li>
+                            <li><a href="category.html">Accessories</a>
+                            </li>
+                        </ul>
+
+                        <hr class="hidden-md hidden-lg">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Where to find us</h4>
+
+                        <p><strong>Phone number :</strong>
+                            <br>{{ telephone }}
+                        <p><strong>Address </strong>
+                            <br>{{ adresse}}
+                        <p><strong>Fax </strong>
+                            <br>{{ fax}}
+                            <br>
+                            <strong>Tunisia Mall, Be different</strong>
+                        </p>
+
+                        <a href="{{ path('contact')}}">Go to contact page</a>
+
+                        <hr class="hidden-md hidden-lg">
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+
+
+                    <div class="col-md-3 col-sm-6">
+
+                        <h4>Get the news</h4>
+
+                        <p class="text-muted">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+
+                        <form>
+                            <div class="input-group">
+
+                                <input type="text" class="form-control">
+
+                                <span class="input-group-btn">
+
+                                    <button class="btn btn-default" type="button">Subscribe!</button>
+
+                                </span>
+
+                            </div>
+                            <!-- /input-group -->
+                        </form>
+
+                        <hr>
+
+                        <h4>Stay in touch</h4>
+
+                        <p class="social">
+                            <a href="#" class="facebook external" data-animate-hover="shake"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="twitter external" data-animate-hover="shake"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="instagram external" data-animate-hover="shake"><i class="fa fa-instagram"></i></a>
+                            <a href="#" class="gplus external" data-animate-hover="shake"><i class="fa fa-google-plus"></i></a>
+                            <a href="#" class="email external" data-animate-hover="shake"><i class="fa fa-envelope"></i></a>
+                        </p>
+
+
+                    </div>
+                    <!-- /.col-md-3 -->
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+        </div>
+        <!-- /#footer -->
+
+        <!-- *** FOOTER END *** -->
+
+
+
+
+        <!-- *** COPYRIGHT ***
+        _________________________________________________________ -->
+        <div id="copyright">
+            <div class="container">
+                <div class="col-md-6">
+                    <p class="pull-left">© {{ "now"|date('d - m -Y') }}  Tunisia Mall -Labess-.</p>
+
+                </div>
+                <div class="col-md-6">
+                    <p class="pull-right">Labess </a> 
+                        <!-- Not removing these links is part of the licence conditions of the template. Thanks for understanding :) -->
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- *** COPYRIGHT END *** -->
+
+
+
+
+    </div>
+    {% block javascripts %}
+
+        <script src="{{ asset("js/respond.min.js") }}"></script>
+        <!-- *** SCRIPTS TO INCLUDE ***
+        _________________________________________________________ -->
+        <script src="{{ asset("js/jquery-1.11.0.min.js") }}"></script>
+        <script src="{{ asset("js/bootstrap.min.js") }}"></script>
+        <script src="{{ asset("js/jquery.cookie.js") }}"></script>
+        <script src="{{ asset("js/waypoints.min.js") }}"></script>
+        <script src="{{ asset("js/modernizr.js") }}"></script>
+        <script src="{{ asset("js/bootstrap-hover-dropdown.js") }}"></script>
+        <script src="{{ asset("js/owl.carousel.min.js") }}"></script>
+        <script src="{{ asset("js/front.js") }}"></script>
+
+        
+        
+        
+        
+        
+          
+        
+ 
+
+    {% endblock %}
+</body>
+
+</html>

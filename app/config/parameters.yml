@@ -1,0 +1,25 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: tunisiamallbdf
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: smtp.gmail.com
+    mailer_user: fatma.jaafar404@gmail.com
+    mailer_password: motdepasse123FFF
+    mailer_encryption : ssl
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+    debug_toolbar: true
+    debug_redirects: false
+    use_assetic_controller: true
+twig:
+    globals:
+        telephone: '216 24240915'
+        fax: '02 23 33 54 77'
+        adresse: 'Ariena Ghazela Esprit'
+        mail: fatma.jaafar404@gmail.com
+        pathDefault: 'http://localhost/TunisiaMallLebes/web/'
